@@ -26,7 +26,7 @@ global.doPost = (e) => {
   if(!isValidMessage(params.text)) return;
 
   const message = latexToMessage(trimMessage(params.text));
-  slack.replyMessageByThread(params, message);
+  slack.replyMessage(params, message);
 }
 
 /**
@@ -44,7 +44,7 @@ function isValidToken(token) {
  * @return {boolean} 
  */
 function isValidMessage(message) {
-  if(message.length > 100) return;
+  if(message.length > config.max_length) return;
   message = message.trim();
   return config.keywords
           .map(a => message.startsWith(a))
