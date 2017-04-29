@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack && babel dist/code.js -o dist/code.js",
-    "deploy": "npm run build && cd dist && gas push & cd .."
+    "deploy": "npm run build && cd dist && gas push && cd .."
   },
   "babel": {
     "presets": [

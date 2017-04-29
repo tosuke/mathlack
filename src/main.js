@@ -25,9 +25,9 @@ global.doPost = (e) => {
 
   if(!isValidMessage(params.text)) return;
 
-  slack.replyMessage(params, params.text);
+  const message = latexToMessage(trimMessage(params.text));
+  slack.replyMessageByThread(params, message);
 }
-
 
 /**
  * validate webhook token
@@ -44,7 +44,34 @@ function isValidToken(token) {
  * @return {boolean} 
  */
 function isValidMessage(message) {
+  if(message.length > 100) return;
+  message = message.trim();
   return config.keywords
-          .map(a => message.trim().startsWith(a))
+          .map(a => message.startsWith(a))
           .reduce((a, b) => a || b, false);
+}
+
+/**
+ * convert latex to message
+ * @param {string} latex
+ * @return {string}
+ */
+function latexToMessage(latex) {
+  return `https://chart.apis.google.com/chart?cht=tx&chs=${config.size}&chl=${encodeURIComponent(latex)}`;
+}
+
+/**
+ * triming message
+ * @param {string} message
+ * @return {string} 
+ */
+function trimMessage(message) {
+  message = message.trim();
+  const prefix = config.keywords.filter(a => message.startsWith(a))[0];
+  return message
+          .replace(prefix, "")
+          .replace(/&amp;/g, "&")
+          .replace(/&lt;/g, "<")
+          .replace(/&gt;/g, ">")
+          .trim();
 }

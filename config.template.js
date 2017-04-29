@@ -7,6 +7,8 @@ module.exports = {
   keywords: [
     "math:"
   ],
+  // size of image
+  size: 60,
   // bot user settings(see https://api.slack.com/methods/chat.postMessage)
   user_persona: {
     username: "mathlack bot"
