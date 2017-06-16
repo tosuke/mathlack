@@ -5,7 +5,7 @@ global.test = () => {
   doPost({
     parameter: {
       token: config.webhook_token,
-      text: "math: e^{i \\pi}=-1",
+      text: "math: x!",
       channel_id: "C44HLB883",
       user_name: "tosuke"
     }
@@ -57,7 +57,8 @@ function isValidMessage(message) {
  * @return {string}
  */
 function latexToMessage(latex) {
-  return `https://chart.apis.google.com/chart?cht=tx&chs=${config.size}&chl=${encodeURIComponent(latex)}`;
+  const encoded = encodeURIComponent(latex).replace(/!/g, "%21");
+  return `https://chart.apis.google.com/chart?cht=tx&chs=${config.size}&chl=${encoded}`;
 }
 
 /**
