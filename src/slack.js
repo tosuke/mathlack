@@ -1,4 +1,4 @@
-const config = require("./config")
+import config from './config'
 
 /**
  * post message to channel
@@ -8,9 +8,9 @@ const config = require("./config")
  * @return {void} 
  */
 export function postMessage(channel_id, message, opt = {}) {
-  const slackApp = SlackApp.create(config.slack_token);
-  const conf = Object.assign(opt, config.user_persona);
-  slackApp.chatPostMessage(channel_id, message, conf);
+  const slackApp = SlackApp.create(config.slack_token)
+  const conf = Object.assign(opt, config.user_persona)
+  slackApp.chatPostMessage(channel_id, message, conf)
 }
 
 
@@ -22,8 +22,8 @@ export function postMessage(channel_id, message, opt = {}) {
  * @return {void} 
  */
 export function replyMessage(replyee, message, opt = {}) {
-  message = `<@${replyee.user_name}> ${message}`;
-  postMessage(replyee.channel_id, message, opt);
+  message = `<@${replyee.user_name}> ${message}`
+  postMessage(replyee.channel_id, message, opt)
 }
 
 
@@ -39,6 +39,6 @@ export function replyMessageByThread(replyee, message, broadcast = true, opt = {
   opt = Object.assign(opt, {
     reply_broadcast: broadcast,
     thread_ts: replyee.timestamp
-  });
-  replyMessage(replyee, message, opt);
+  })
+  replyMessage(replyee, message, opt)
 }
